@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¿Quieres ser mi San Valentín?</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            background-image: url("Imagenes/FondoI.png");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        button {
+            font-size: 30px;
+            padding: 20px 100px;
+            border: none;
+            cursor: pointer;
+            border-radius: 10px;
+        }
+        #yes {
+            background-color: rgb(138, 180, 89);
+            font-weight: bold;
+        }
+        #no {
+            background-color: rgb(219, 85, 85);
+            position: relative;
+        }
+        .hidden {
+            display: none;
+        }
+        .message {
+            margin-top: 50px;
+            font-size: 36px;
+            font-weight: bold;
+            color: #1100ffc5;
+        }
+        img {
+            margin-top: -20px;
+            max-width: 250px;
+            border-radius: 10px;
+        }
+
+        /* Animación para el movimiento de los emojis */
+        @keyframes explosionAnimation {
+            0% {
+                transform: translate(0, 0) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(var(--moveX), var(--moveY)) rotate(720deg) scale(1.5);
+                opacity: 0;
+            }
+        }
+
+        .emoji {
+            font-size: 30px;
+            position: absolute;
+            opacity: 1;
+            animation: explosionAnimation 3s ease-out forwards;
+        }
+
+        /* Estilos para las imágenes adicionales con posicionamiento predefinido */
+        .additionalImage {
+            position: absolute;
+            max-width: 250px;
+            border-radius: 10px;
+            opacity: 0;
+            animation: showImageAnimation 1s ease-out forwards;
+        }
+
+        /* Animación para hacer aparecer las imágenes con suavidad */
+        @keyframes showImageAnimation {
+            0% {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Posiciones predefinidas para las imágenes */
+        .imageTopLeft {
+            top: 10%;
+            left: 5%;
+        }
+
+        .imageTopRight {
+            top: 10%;
+            right: 5%;
+        }
+
+        .imageBottomLeft {
+            bottom: 10%;
+            left: 5%;
+        }
+
+        .imageBottomRight {
+            bottom: 10%;
+            right: 5%;
+        }
+
+        .imageCenter {
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 id="initialMessage">¿Quieres ser mi San Valentín? ❤️</h1>
+        <img id="initialImage" src="Imagenes/VacaInicio.gif" alt="Imagen inicial" />
+        <div class="buttons">
+            <button id="yes">Sí</button>
+            <button id="no">No</button>
+        </div>
+        <div id="response" class="hidden">
+            <p class="message"></p>
+            <img id="responseImage" src="" alt="Respuesta">
+        </div>
+    </div>
+
+    <script>
+        let attempt = 0;
+        const noButton = document.getElementById("no");
+        const yesButton = document.getElementById("yes");
+        const message = document.querySelector(".message");
+        const image = document.getElementById("initialImage");
+        const responseDiv = document.getElementById("response");
+        const responseImage = document.getElementById("responseImage");
+        const initialMessage = document.getElementById("initialMessage");
+        const buttonsDiv = document.querySelector(".buttons");
+
+        // Imágenes adicionales que aparecerán cuando el usuario diga "Sí"
+        const additionalImages = [
+            "Imagenes/SI1.gif",
+            "Imagenes/SI2.gif",
+            "Imagenes/SI3.gif",
+            // Agrega más imágenes aquí si lo deseas
+        ];
+
+        // Función cuando presiona "Sí"
+        yesButton.addEventListener("click", function() {
+            showFinalMessage();
+            showExplosionAnimation(); // Mostrar animación de emojis
+            showAdditionalImages(); // Mostrar imágenes adicionales
+        });
+
+        // Función cuando presiona "No"
+        noButton.addEventListener("click", function() {
+            attempt++;
+            switch (attempt) {
+                case 1:
+                    noButton.textContent = "¡Ay di que sí!";
+                    image.src = "Imagenes/No11.gif";
+                    break;
+                case 2:
+                    noButton.textContent = "Confía en mí";
+                    image.src = "Imagenes/NO2.gif";
+                    break;
+                case 3:
+                    noButton.textContent = "Te prometo que no te arrepentirás";
+                    image.src = "Imagenes/NO3.gif";
+                    break;
+                case 4:
+                    noButton.textContent = "Ándale, di que sí";
+                    image.src = "Imagenes/NO4.gif";
+                    break;
+                case 5:
+                    noButton.textContent = "Por fis 🥺";
+                    image.src = "Imagenes/NO5.gif";
+                    break;
+                case 6:
+                    noButton.textContent = "Será la mejor decisión";
+                    image.src = "Imagenes/NO6.gif";
+                    break;
+                case 7:
+                    noButton.textContent = "Hazlo por Snoopy 🐶";
+                    image.src = "Imagenes/NO7.gif";
+                    break;
+                case 8:
+                    noButton.textContent = "¿CHI? 🧐";
+                    image.src = "Imagenes/NO8.gif";
+                    break;
+                case 9:
+                    noButton.textContent = "Bueno, será a la mala 😡";
+                    image.src = "Imagenes/NO99.jpg";
+                    break;
+                case 10:
+                    noButton.textContent = "NO";
+                    image.src = "Imagenes/NO9.gif";
+                    enableNoButtonMovement();
+                    break;
+                default:
+                    showFinalMessage();
+                    break;
+            }
+        });
+
+        // Función para mostrar el mensaje final
+        function showFinalMessage() {
+            message.textContent = "¡Ayyy, yo sabía que dirías que sí! ❤️🥰";
+            responseImage.src = "Imagenes/VacaSi.gif";
+            responseImage.alt = "Imagen de agradecimiento";
+            
+            responseDiv.classList.remove("hidden");
+            buttonsDiv.style.display = "none";
+            image.style.display = "none";
+            initialMessage.style.display = "none";
+        }
+
+        // Función para mostrar la animación de explosión de emojis
+        function showExplosionAnimation() {
+            const emojis = ['❤️', '😍', '💘', '💖', '💌', '😘', '🌹', '🎉', '💫'];
+            const emojiCount = 50; // Número de emojis a generar
+
+            for (let i = 0; i < emojiCount; i++) {
+                const emoji = document.createElement('div');
+                emoji.classList.add('emoji');
+                emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+
+                // Establecer las posiciones aleatorias de los emojis
+                const randomDirectionX = Math.random() * 400 - 200; // Movimiento aleatorio en X
+                const randomDirectionY = Math.random() * 400 - 200; // Movimiento aleatorio en Y
+
+                // Asignar el movimiento para la animación
+                emoji.style.setProperty('--moveX', `${randomDirectionX}px`);
+                emoji.style.setProperty('--moveY', `${randomDirectionY}px`);
+
+                // Colocamos los emojis en una posición aleatoria al inicio
+                emoji.style.left = `${Math.random() * 100}%`;
+                emoji.style.top = `${Math.random() * 100}%`;
+
+                document.body.appendChild(emoji);
+
+                // Eliminar los emojis después de que la animación termine
+                setTimeout(() => {
+                    emoji.remove();
+                }, 3000); // Duración de la animación
+            }
+        }
+
+        // Función para mostrar las imágenes adicionales en lugares específicos
+        function showAdditionalImages() {
+            additionalImages.forEach((src, index) => {
+                const img = document.createElement('img');
+                img.src = src;
+                img.classList.add('additionalImage');
+
+                // Seleccionar una clase de posición predefinida según el índice
+                if (index === 0) img.classList.add('imageTopLeft');
+                else if (index === 1) img.classList.add('imageTopRight');
+                else if (index === 2) img.classList.add('imageBottomLeft');
+                else if (index === 3) img.classList.add('imageBottomRight');
+                else img.classList.add('imageCenter'); // Para el resto, se centra la imagen
+
+                document.body.appendChild(img);
+
+                // Hacer aparecer la imagen con la animación
+                setTimeout(() => {
+                    img.style.opacity = 1;
+                }, 200); // Tiempo para iniciar la animación de aparición
+            });
+        }
+
+        // Función para hacer que el botón "No" se mueva
+        function enableNoButtonMovement() {
+            noButton.style.position = "absolute";
+            noButton.onmouseover = function() {
+                let maxWidth = window.innerWidth - noButton.clientWidth;
+                let maxHeight = window.innerHeight - noButton.clientHeight;
+
+                let randomX = Math.random() * maxWidth;
+                let randomY = Math.random() * maxHeight;
+
+                noButton.style.left = `${randomX}px`;
+                noButton.style.top = `${randomY}px`;
+            };
+        }
+    </script>
+</body>
+</html>
